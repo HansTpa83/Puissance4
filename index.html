@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/p4.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Puissance 4</title>
+</head>
+<body>
+    <form method="post">
+        <div class="elem">
+            <div>
+                <div>
+                    <label for="rows">Rows</label>
+                </div>
+                <input type="number" name="rows" id="rows" min="6" value="6">
+            </div>
+            <div>
+                <div>
+                    <label for="cols">Cols</label>
+                </div>
+                <input type="number" name="cols" id="cols" min="7" value="7">
+            </div>
+        </div>
+
+        <div class="elem">
+            <div>
+                <div>
+                    <label for="player1">Player1 name</label>
+                </div>
+                <input type="text" name="player1_name" id="player1_name" placeholder="Player 01">  
+            </div>
+            <div>
+                <div>
+                    <label for="player1_color">Player1 color</label>
+                </div>
+                <select name="player1_color" id="player1_color">
+                    <option value="" disabled selected>Choose</option>
+                    <option value="red">red</option>
+                    <option value="yellow">yellow</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="elem">
+            <div>
+                <div>
+                    <label for="player2">Player2 name</label>
+                </div>
+                <input type="text" name="player2_name" id="player2_name" placeholder="Player 02">
+            </div>
+            <div>
+                <div>
+                    <label for="player2_color">Player2 color</label>
+                </div>
+                <select name="player2_color" id="player2_color">
+                    <option value="" disabled selected>Choose</option>
+                    <option value="red">red</option>
+                    <option value="yellow">yellow</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="button">
+            <button>Submit</button>
+        </div>
+    </form>
+    
+    <div id="jeux">
+        <div id="game"></div>
+        <div>
+            <div id="playing"></div>
+            <div id="score"></div>
+            <div>
+                <button>Restart</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
