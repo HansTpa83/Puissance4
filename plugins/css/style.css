@@ -1,7 +1,10 @@
+body{
+    display: flex;
+}
 /***** FORM *****/
 form{
     border: 2px solid;
-    width: 25vw;
+    width: 30vw;
     margin: auto;
 }
 .elem{
@@ -14,12 +17,10 @@ form{
 #button{
     text-align: center;
     margin: 2vh 2vw;
-}
+} 
 
 /***** GAME *****/
-#jeux{
-    display: none;
-}
+
 #game{
     text-align: center;
     display: inline-block;
@@ -34,17 +35,24 @@ form{
     margin: 5px;
     display: inline-block;
 } 
-    /***** GAME *****/
+
+    /***** colors *****/
 
 .row.red{
     background-color: red;
 }
-.row.dark-red{
-    background-color: darkred;
-}
 .row.yellow{
     background-color: yellow;
 }
-.row.dark-yellow{
-    background-color: darkgoldenrod;
+.row.selec{
+    background-color: rgb(144, 144, 144, 0.5);
+}
+
+    /***** info *****/
+#info{
+    display: none;
+    text-align: center;
+    min-width: 10vw;
+    border: 1px solid black;
+    margin: 0 5vw;
 }
