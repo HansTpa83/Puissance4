@@ -26,7 +26,7 @@ $.fn.puissance4 = function(){
                     '</div>'+
                 '</div>'+
             '</div>'+
-    
+
             '<div class="elem">'+
                 '<div>'+
                     '<div>'+
@@ -43,7 +43,7 @@ $.fn.puissance4 = function(){
                     '<option value="red">red</option>'+
                 '</select>'+
             '</div>'+
-                        
+
             '<div class="elem">'+
                 '<div>'+
                     '<div>'+
@@ -89,8 +89,8 @@ $.fn.puissance4 = function(){
                              '</div>')
         }
     }
-   
-    
+
+
     class P4 {
         constructor(balise, rows, cols, player1, player2){
             this.balise = balise;
@@ -103,7 +103,7 @@ $.fn.puissance4 = function(){
             this.selection(this.player1, this.player2);
             this.win_check();
         }
-        
+
         draw(){
             $("body").append("<div id=\"game\"></div>");
             for (let i = 1; i <= this.rows; i++){
@@ -114,8 +114,8 @@ $.fn.puissance4 = function(){
                 $(this.balise).append(rows);
             }
         }
-    
-    
+
+
         selection(player1, player2){
             var i = 0;
             var pos;
@@ -145,7 +145,7 @@ $.fn.puissance4 = function(){
             $("#game").on("click", ".row.empty", function(e){
                 i++;
                 pos = last_case(e.target);
-                
+
                 if (i%2==1){
                     $("#current_player").text(player2["name"]);
                     color = player1["color"];
@@ -153,13 +153,13 @@ $.fn.puissance4 = function(){
                     $("#current_player").text(player1["name"]);
                     color = player2["color"];
                 }
-                
+
                 $(pos).addClass(color);
                 $(pos).removeClass("empty");
                 $(pos).removeClass("selec");
                 click = 0;
             })
-
+            
             $("#undo").on("click", function(){
                 click++;
                 if(click == 1){
@@ -174,13 +174,11 @@ $.fn.puissance4 = function(){
                 }
             })
         }
-    
-        win_check(){
-            console.log(pos)
-        }
+
+
     }
     new Formulaire();
-    
+
     $("#form_p4").on("submit", function(e){
         e.preventDefault()
         let data = new FormData(this);
@@ -190,7 +188,7 @@ $.fn.puissance4 = function(){
         $(this).hide();
         $("#game").show();
         $("#info").show();
-        
+
         new P4("#game", data.get("rows"), data.get("cols"), player1_info, player2_info)
     })
 }
