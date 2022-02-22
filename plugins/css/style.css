@@ -9,11 +9,15 @@ form{
 }
 .elem{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     margin: 2vh 2vw;
 }
-.elem div{
-    margin-right: 30px;
+.elem label{
+    vertical-align: middle;
+
 }
+
 #button{
     text-align: center;
     margin: 2vh 2vw;
@@ -55,4 +59,7 @@ form{
     min-width: 10vw;
     border: 1px solid black;
     margin: 0 5vw;
+}
+#score{
+    margin: 2vh;
 }

@@ -90,7 +90,6 @@ $.fn.puissance4 = function(){
         }
     }
 
-
     class P4 {
         constructor(balise, rows, cols, player1, player2){
             this.balise = balise;
@@ -101,7 +100,7 @@ $.fn.puissance4 = function(){
 
             this.draw();
             this.selection(this.player1, this.player2);
-            this.win_check();
+            $("#score").append(this.player1["name"] +" "+ 0 +" : "+ 0 +" "+this.player2["name"])
         }
 
         draw(){
@@ -114,7 +113,6 @@ $.fn.puissance4 = function(){
                 $(this.balise).append(rows);
             }
         }
-
 
         selection(player1, player2){
             var i = 0;
@@ -142,24 +140,27 @@ $.fn.puissance4 = function(){
             $("#game").on("mouseleave", ".row.empty", function(e){
                 $(last_case(e.target)).removeClass("selec");
             })
-            $("#game").on("click", ".row.empty", function(e){
+            $("#game").on("click", ".row.empty", (e) => {
                 i++;
                 pos = last_case(e.target);
 
                 if (i%2==1){
                     $("#current_player").text(player2["name"]);
                     color = player1["color"];
+                    $(pos).addClass(color);
+                    this.win_check(pos, player1)
                 }else {
                     $("#current_player").text(player1["name"]);
                     color = player2["color"];
+                    $(pos).addClass(color);
+                    this.win_check(pos, player2)
                 }
 
-                $(pos).addClass(color);
                 $(pos).removeClass("empty");
                 $(pos).removeClass("selec");
                 click = 0;
             })
-            
+
             $("#undo").on("click", function(){
                 click++;
                 if(click == 1){
@@ -175,8 +176,112 @@ $.fn.puissance4 = function(){
             })
         }
 
+        win_check(pos, player){
+            let player1 = this.player1["name"];
+            let player2 = this.player2["name"];
+            let col = this.cols
+            let row = this.rows
+            let score = {red: 0, yellow: 0 }
+            let nbr_row = parseInt($(pos).attr("data-line"))
+            let nbr_col = parseInt($(pos).attr("data-col"))
+            let color = player["color"]
 
+            function check_hori(){
+                let total = 0
+                for(let i = 1; i<= col; i++){
+                    if($('[data-col='+i+'][data-line='+nbr_row+']').hasClass(color)){
+                        total++
+                        if(total >= 4){
+                            console.log("hori")
+                            return true;
+                        }
+                    } else{
+                        total = 0;
+                    }
+                }
+                return false;
+            }
+
+            function check_vert(){
+                let total = 0
+
+                for(let i = row; i>= 1; i--){
+                    if($('[data-col='+nbr_col+'][data-line='+i+']').hasClass(color)){
+                        total++
+                        if(total == 4){
+                            console.log("vert")
+
+                            return true;
+                        }
+                    } else{
+                        total = 0;
+                    }
+
+                }
+                return false;
+            }
+
+            function check_diago_droite(){
+                let total = 0
+                let offset_y = 3
+                let offset_x = -3
+
+                for(let i = 1; i <= col; i++){
+                    let check_case = $('[data-col='+(nbr_col+offset_x)+'][data-line='+(nbr_row+offset_y)+']')
+                    if ($(check_case).hasClass(color)){
+                        total++
+                        if (total == 4){
+                            console.log("diago_droite")
+                            return true
+                        }
+                    }
+                    offset_y--
+                    offset_x++
+                }
+                return false;
+            }
+
+            function check_diago_gauche(){
+                let total = 0
+                let offset_y = -3
+                let offset_x = -3
+
+                for(let i = 1; i <= col; i++){
+                    let check_case = $('[data-col='+(nbr_col+offset_x)+'][data-line='+(nbr_row+offset_y)+']')
+                    if ($(check_case).hasClass(color)){
+                        total++
+                        if (total == 4){
+                            console.log("diago_gauche")
+                            return true
+                        }
+                    }
+                    offset_y++
+                    offset_x++
+                }
+                return false;
+            }
+
+            check_diago_gauche()
+
+            if(check_hori() || check_vert() || check_diago_droite() || check_diago_gauche()){
+                alert(player["name"]+" win")
+                score[player["color"]]++
+                console.log(score)
+                $("#score").text(this.player1["name"] +" "+ score["red"] +" : "+ score["yellow"] +" "+this.player2["name"])
+
+                let retry = confirm("rematch  ?")
+                if(retry == true){
+                    $(".row").removeClass("red")
+                    $(".row").removeClass("yellow")
+                    $(".row").addClass("empty")
+                } else {
+                    window.location = window.location
+                }
+            }
+
+        }
     }
+
     new Formulaire();
 
     $("#form_p4").on("submit", function(e){
