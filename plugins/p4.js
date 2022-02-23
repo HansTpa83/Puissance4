@@ -86,6 +86,9 @@ $.fn.puissance4 = function(){
                                 '<div>'+
                                     '<button id="undo">Undo</button>'+
                                 '</div>'+
+                                '<div>'+
+                                    '<button id="reset">RESET</button>'+
+                                '</div>'+
                              '</div>')
         }
     }
@@ -140,24 +143,33 @@ $.fn.puissance4 = function(){
             $("#game").on("mouseleave", ".row.empty", function(e){
                 $(last_case(e.target)).removeClass("selec");
             })
+
+            let score = {red: 0, yellow: 0 }
             $("#game").on("click", ".row.empty", (e) => {
+
                 i++;
                 pos = last_case(e.target);
 
                 if (i%2==1){
                     $("#current_player").text(player2["name"]);
                     color = player1["color"];
+                    $(pos).hide()
                     $(pos).addClass(color);
-                    this.win_check(pos, player1)
+                    $(pos).fadeIn(3000);
+                    this.win_check(pos, player1, score)
                 }else {
                     $("#current_player").text(player1["name"]);
                     color = player2["color"];
+                    $(pos).hide()
                     $(pos).addClass(color);
-                    this.win_check(pos, player2)
+                    $(pos).fadeIn(100);
+                    this.win_check(pos, player2, score)
                 }
 
                 $(pos).removeClass("empty");
                 $(pos).removeClass("selec");
+
+                    
                 click = 0;
             })
 
@@ -174,14 +186,29 @@ $.fn.puissance4 = function(){
                     $(pos).addClass("empty");
                 }
             })
+            $("#reset").on("click", function(){
+                click++;
+                if(click == 1){
+                    i--;
+                    if (i%2==1){
+                        $("#current_player").text(player2["name"]);
+                    }else {
+                        $("#current_player").text(player1["name"]);
+                    }
+                    $(".row").removeClass("red");
+                    $(".row").removeClass("yellow");
+                    $(".row").addClass("empty");
+                    $("#game").css("pointer-events", "auto")
+                }
+            })
         }
 
-        win_check(pos, player){
+        win_check(pos, player, scoreBoard){
+            console.log(scoreBoard)
             let player1 = this.player1["name"];
             let player2 = this.player2["name"];
             let col = this.cols
             let row = this.rows
-            let score = {red: 0, yellow: 0 }
             let nbr_row = parseInt($(pos).attr("data-line"))
             let nbr_col = parseInt($(pos).attr("data-col"))
             let color = player["color"]
@@ -204,7 +231,6 @@ $.fn.puissance4 = function(){
 
             function check_vert(){
                 let total = 0
-
                 for(let i = row; i>= 1; i--){
                     if($('[data-col='+nbr_col+'][data-line='+i+']').hasClass(color)){
                         total++
@@ -225,7 +251,6 @@ $.fn.puissance4 = function(){
                 let total = 0
                 let offset_y = 3
                 let offset_x = -3
-
                 for(let i = 1; i <= col; i++){
                     let check_case = $('[data-col='+(nbr_col+offset_x)+'][data-line='+(nbr_row+offset_y)+']')
                     if ($(check_case).hasClass(color)){
@@ -245,7 +270,6 @@ $.fn.puissance4 = function(){
                 let total = 0
                 let offset_y = -3
                 let offset_x = -3
-
                 for(let i = 1; i <= col; i++){
                     let check_case = $('[data-col='+(nbr_col+offset_x)+'][data-line='+(nbr_row+offset_y)+']')
                     if ($(check_case).hasClass(color)){
@@ -261,24 +285,19 @@ $.fn.puissance4 = function(){
                 return false;
             }
 
-            check_diago_gauche()
 
             if(check_hori() || check_vert() || check_diago_droite() || check_diago_gauche()){
                 alert(player["name"]+" win")
-                score[player["color"]]++
-                console.log(score)
-                $("#score").text(this.player1["name"] +" "+ score["red"] +" : "+ score["yellow"] +" "+this.player2["name"])
+                scoreBoard[color]++
+                $("#score").text(this.player1["name"] +" "+ scoreBoard["red"] +" : "+ scoreBoard["yellow"] +" "+this.player2["name"])
 
                 let retry = confirm("rematch  ?")
                 if(retry == true){
-                    $(".row").removeClass("red")
-                    $(".row").removeClass("yellow")
-                    $(".row").addClass("empty")
+                    $("#game").css("pointer-events", "none")
                 } else {
                     window.location = window.location
                 }
             }
-
         }
     }
 
@@ -293,6 +312,7 @@ $.fn.puissance4 = function(){
         $(this).hide();
         $("#game").show();
         $("#info").show();
+
 
         new P4("#game", data.get("rows"), data.get("cols"), player1_info, player2_info)
     })
