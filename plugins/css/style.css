@@ -1,0 +1,65 @@
+body{
+    display: flex;
+}
+/***** FORM *****/
+form{
+    border: 2px solid;
+    width: 30vw;
+    margin: auto;
+}
+.elem{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 2vh 2vw;
+}
+.elem label{
+    vertical-align: middle;
+
+}
+
+#button{
+    text-align: center;
+    margin: 2vh 2vw;
+} 
+
+/***** GAME *****/
+
+#game{
+    text-align: center;
+    display: inline-block;
+    background-color: blue;
+    margin-bottom: 20px;
+}
+.row{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 5px;
+    display: inline-block;
+} 
+
+    /***** colors *****/
+
+.row.red{
+    background-color: red;
+}
+.row.yellow{
+    background-color: yellow;
+}
+.row.selec{
+    background-color: rgb(144, 144, 144, 0.5);
+}
+
+    /***** info *****/
+#info{
+    display: none;
+    text-align: center;
+    min-width: 10vw;
+    border: 1px solid black;
+    margin: 0 5vw;
+}
+#score{
+    margin: 2vh;
+}
